@@ -1,0 +1,21 @@
+# fly.toml app configuration file generated for manhattan-bot on 2026-01-06T23:46:15+13:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'manhattan-bot'
+primary_region = 'syd'
+
+[build]
+
+[deploy]
+  strategy = "immediate"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

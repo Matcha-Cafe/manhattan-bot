@@ -1,0 +1,26 @@
+{
+    "name": "manhattan-bot",
+    "module": "src/index.ts",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "stop:prod": "bun run src/scripts/controller.ts stop",
+        "start:prod": "bun run src/scripts/controller.ts start",
+        "dev": "bun --watch run src/index.ts",
+        "start": "bun run src/index.ts",
+        "format": "bunx biome format --write",
+        "deploy": "fly deploy"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.3.11",
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "discord.js": "^14.25.1",
+        "remeda": "^2.33.1",
+        "zod": "^4.3.5"
+    }
+}
