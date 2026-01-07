@@ -16,9 +16,16 @@ client.on("clientReady", (c) => {
     logData("user", c.user);
 
     client.user?.setActivity({
-        name: "drinking coffee",
+        name: "brewing coffee...",
         type: ActivityType.Custom,
     });
+
+    setTimeout(() => {
+        client.user?.setActivity({
+            name: "drinking coffee",
+            type: ActivityType.Custom,
+        });
+    }, 10000);
 
     console.log(`Logged in as ${c.user.tag}`);
 });
