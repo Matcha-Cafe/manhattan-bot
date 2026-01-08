@@ -6,5 +6,6 @@ export const secret = z
         CLIENT_ID: z.string().min(1, "CLIENT_ID is required"),
         GUILD_ID: z.string().min(1, "GUILD_ID is required"),
         NODE_ENV: z.enum(["development", "production"]).default("production"),
+        DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
     })
     .parse(process.env);

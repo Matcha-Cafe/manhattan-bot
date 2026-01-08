@@ -1,5 +1,6 @@
 import type { Command } from "../model";
 import { addCommandService } from "./addService";
+import { somethingCommandService } from "./birthdayService";
 import { infoCommandService } from "./infoService";
 import { pingCommandService } from "./pingService";
 import { rollCommandService } from "./rollService";
@@ -11,4 +12,5 @@ export const staticCommandsRegistry: Command[] = [
     rollCommandService,
     templateCommandService,
     infoCommandService,
+    somethingCommandService,
 ];
