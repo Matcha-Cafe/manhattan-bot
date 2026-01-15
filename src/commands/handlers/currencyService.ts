@@ -125,7 +125,7 @@ const currencyHandle: CommandHandler = async (interaction) => {
             inline: true,
         })
         .setFooter({
-            text: `last exchange updated ${formatDistance(updateTimestamp, Date.now())} ago`,
+            text: `exchange last updated ${formatDistance(updateTimestamp, Date.now())} ago`,
         });
 
     interaction.reply({ embeds: [exampleEmbed] });
