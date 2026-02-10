@@ -7,7 +7,7 @@ import { Command, type CommandHandler } from "../model";
 // slash UI template
 const templateSchema: RESTPostAPIApplicationCommandsJSONBody = {
     name: "template",
-    description: "i will perdict your number",
+    description: "i will predict your number",
     options: [
         {
             name: "your_number",
@@ -23,8 +23,8 @@ const templateHandle: CommandHandler = (interaction) => {
     interaction.reply(`your number is ${number}`);
 };
 
-export const templateCommandService = new Command(
-    "perdict",
+export const predictNumber = new Command(
+    "predict",
     templateSchema,
     templateHandle,
 );
