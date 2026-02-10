@@ -6,10 +6,9 @@ import {
     varchar,
 } from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    discordId: varchar().unique(),
-    somethingCount: integer().notNull().default(0),
+export const birthdaysTable = pgTable("birthdays", {
+  discordId: varchar().unique(),
+  birthdayDate: integer().notNull(), // store as YYYYMMDD
 });
 
 export const currencyTable = pgTable("currency", {
