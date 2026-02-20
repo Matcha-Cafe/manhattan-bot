@@ -1,4 +1,5 @@
 import {
+    date,
     doublePrecision,
     integer,
     pgTable,
@@ -7,8 +8,8 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const birthdaysTable = pgTable("birthdays", {
-  discordId: varchar().unique(),
-  birthdayDate: integer().notNull(), // store as YYYYMMDD
+    discordId: varchar().unique(),
+    birthdayDate: date().notNull(),
 });
 
 export const currencyTable = pgTable("currency", {
