@@ -8,6 +8,7 @@ import { sql } from "drizzle-orm";
 import { pipe } from "remeda";
 import { db } from "../../db";
 import { birthdaysTable } from "../../db/schema";
+import { formatDate, validateInputDate } from "../../libs/utils";
 import { Command, type CommandHandler } from "../model";
 
 export const birthdaySchema: RESTPostAPIApplicationCommandsJSONBody = {
@@ -33,54 +34,6 @@ export const birthdaySchema: RESTPostAPIApplicationCommandsJSONBody = {
             description: "View friends' birthdays",
         },
     ],
-};
-
-export function formatBirthday(birthdayInt: number): string {
-    // Ensure 8 digits
-    const str = birthdayInt.toString().padStart(8, "0");
-
-    const year = parseInt(str.slice(0, 4), 10);
-    const month = parseInt(str.slice(4, 6), 10); // 1-12
-    const day = parseInt(str.slice(6, 8), 10);
-
-    const dateObj = new Date(year, month - 1, day);
-
-    const timestamp = Math.floor(dateObj.getTime() / 1000);
-
-    return `<t:${timestamp}:d>`; // short date format
-}
-
-// YYYY-MM-DD
-
-type ValidateOutput =
-    | {
-          error?: never;
-          date: Date;
-      }
-    | {
-          error: string;
-          date?: never;
-      };
-
-const validateInputDate = (dateStr: string): ValidateOutput => {
-    try {
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-            return { error: "Invalid date format. Use YYYY-MM-DD" };
-        }
-        const date = new Date(dateStr);
-        return { date };
-    } catch {
-        return { error: "Invalid date format. Use YYYY-MM-DD" };
-    }
-};
-
-const formatDate = (date: Date) => {
-    const outputFormat = new Intl.DateTimeFormat("en-GB", {
-        dateStyle: "long",
-        timeZone: "Australia/Sydney",
-    }).format(date);
-
-    return outputFormat;
 };
 
 const birthdayHandle: CommandHandler = async (interaction) => {

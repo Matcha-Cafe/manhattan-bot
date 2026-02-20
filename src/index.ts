@@ -1,9 +1,15 @@
-import { ActivityType, Client, IntentsBitField } from "discord.js";
+import {
+    ActivityType,
+    type Channel,
+    Client,
+    IntentsBitField,
+} from "discord.js";
 import { logData } from "./libs/log";
 import "./command";
 import { staticCommandsRegistry } from "./commands/handlers";
+import { addDayCronJob } from "./cron/cron-service";
 
-const client = new Client({
+export const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
         IntentsBitField.Flags.GuildMembers,
@@ -12,20 +18,40 @@ const client = new Client({
     ],
 });
 
-client.on("clientReady", (c) => {
+const isDevelopment = process.env.NODE_ENV === "development";
+
+let homeChannel: Channel | null = null;
+
+client.on("clientReady", async (c) => {
     logData("user", c.user);
 
+    homeChannel =
+        client.channels.cache.get("1458029020192178306") ||
+        (await client.channels.fetch("1458029020192178306"));
+
     client.user?.setActivity({
-        name: "brewing coffee...",
+        name: "brewing matcha... 🍃",
         type: ActivityType.Custom,
     });
 
+    if (homeChannel) {
+        console.log(homeChannel);
+        addDayCronJob(homeChannel);
+    }
+
     setTimeout(() => {
-        client.user?.setActivity({
-            name: "drinking coffee",
-            type: ActivityType.Custom,
-        });
-    }, 10000);
+        if (isDevelopment) {
+            client.user?.setActivity({
+                name: "experimenting matcha 🍵",
+                type: ActivityType.Custom,
+            });
+        } else {
+            client.user?.setActivity({
+                name: "drinking matcha 🍵",
+                type: ActivityType.Custom,
+            });
+        }
+    }, 5000);
 
     console.log(`Logged in as ${c.user.tag}`);
 });
@@ -34,6 +60,12 @@ client.on("messageCreate", (message) => {
     if (message.author.bot) return;
     if (message.content === "ping") {
         message.reply("pong");
+    }
+
+    if (message.content === "beep") {
+        if (homeChannel?.isSendable()) {
+            homeChannel.send("boop");
+        }
     }
 });
 
